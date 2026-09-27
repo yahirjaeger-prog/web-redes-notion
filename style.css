@@ -1,0 +1,301 @@
+/* 07 · Sitio web y redes sociales — carrusel independiente
+   Estilo adaptado al lenguaje visual de Notion (tipografía, escala y colores de texto) */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: #ffffff;
+}
+
+body {
+  padding: clamp(20px, 4vw, 40px) 16px;
+  /* Misma pila tipográfica que usa Notion (tipo de letra "Predeterminado") */
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #2c2c2b;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ─── Layout ─────────────────────────────────── */
+
+.channels {
+  --sky: #6cabdd;
+  --ink: #2c2c2b;                    /* texto principal de Notion */
+  --muted: #7d7a75;                  /* texto secundario de Notion */
+  --line: rgba(55, 53, 47, .16);     /* bordes y divisores de Notion */
+  --hover: rgba(55, 53, 47, .06);    /* fondo hover de Notion */
+  --dir: 1;
+  --ease: cubic-bezier(.22, .61, .36, 1);
+
+  max-width: 860px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  grid-template-areas:
+    "prev media next"
+    ".    info  .   "
+    ".    count .   ";
+  column-gap: clamp(14px, 3vw, 28px);
+  align-items: center;
+}
+
+/* ─── Transición entre slides: fade + desplazamiento corto ── */
+
+.slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  transform: translateX(calc(var(--dir) * 14px));
+  pointer-events: none;
+}
+
+.slide.is-active,
+.slide.is-leaving {
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+
+.slide.is-active {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.slide.is-leaving {
+  transform: translateX(calc(var(--dir) * -14px));
+}
+
+/* ─── Imagen ─────────────────────────────────── */
+
+.media-stack {
+  grid-area: media;
+  display: grid;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 2 / 1;
+}
+
+.media {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  cursor: default;
+  outline: none;
+}
+
+.media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: filter .5s var(--ease), transform .6s var(--ease);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 2px;
+  padding: clamp(16px, 4vw, 30px);
+  background: linear-gradient(to top, rgba(25, 25, 24, .55), rgba(25, 25, 24, .15));
+  color: #fff;
+  opacity: 0;
+  transition: opacity .45s var(--ease);
+}
+
+.overlay > * {
+  transform: translateY(6px);
+  transition: transform .5s var(--ease);
+}
+
+.overlay__handle {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.overlay__tags {
+  font-size: 14px;
+  color: rgba(255, 255, 255, .8);
+}
+
+/* Hover (escritorio) · foco (teclado) · tap (móvil, clase desde JS) */
+.media:hover img,
+.media:focus-visible img,
+.media.is-revealed img {
+  filter: brightness(.6) blur(2px);
+  transform: scale(1.02);
+}
+
+.media:hover .overlay,
+.media:focus-visible .overlay,
+.media.is-revealed .overlay {
+  opacity: 1;
+}
+
+.media:hover .overlay > *,
+.media:focus-visible .overlay > *,
+.media.is-revealed .overlay > * {
+  transform: none;
+}
+
+.media:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--sky);
+}
+
+@media (hover: none) {
+  .media { cursor: pointer; }
+}
+
+/* ─── Flechas ────────────────────────────────── */
+
+.nav {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: #ffffff;
+  color: var(--muted);
+  cursor: pointer;
+  transition: background-color .2s ease, color .2s ease, transform .25s ease;
+}
+
+.nav--prev { grid-area: prev; }
+.nav--next { grid-area: next; }
+
+.nav svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.nav:hover {
+  background: var(--hover);
+  color: var(--ink);
+}
+
+.nav--prev:hover { transform: translateX(-2px); }
+.nav--next:hover { transform: translateX(2px); }
+
+.nav:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 2px;
+}
+
+/* ─── Información (centrada, con la escala tipográfica de Notion) ── */
+
+.info-stack {
+  grid-area: info;
+  display: grid;
+  padding-top: clamp(24px, 4vw, 32px);
+  text-align: center;
+}
+
+.info__name {
+  margin: 0 0 8px;
+  font-size: 20px;            /* Encabezado 3 de Notion */
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.info__name::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 2px;
+  margin: 0 auto 14px;
+  background: var(--sky);
+  border-radius: 2px;
+}
+
+.info__text {
+  max-width: 46ch;
+  margin: 0 auto 14px;
+  font-size: 16px;            /* Texto de Notion */
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.info__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--sky);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: text-decoration-color .2s ease;
+}
+
+.info__link span {
+  color: var(--sky);
+  text-decoration: none;
+  transition: transform .25s ease;
+}
+
+.info__link:hover { text-decoration-color: var(--ink); }
+.info__link:hover span { transform: translateX(3px); }
+
+.info__link:focus-visible {
+  outline: 2px solid var(--sky);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ─── Indicador ──────────────────────────────── */
+
+.counter {
+  grid-area: count;
+  margin: 22px 0 0;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.counter [data-current] {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ─── Móvil ──────────────────────────────────── */
+
+@media (max-width: 560px) {
+  .channels {
+    grid-template-areas:
+      "media media media"
+      "prev  count next"
+      "info  info  info";
+    row-gap: 16px;
+  }
+
+  .nav { justify-self: center; }
+  .counter { margin: 0; }
+  .info-stack { padding-top: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .slide.is-leaving { transform: none; }
+  .media img,
+  .media:hover img,
+  .media.is-revealed img { transform: none; }
+}

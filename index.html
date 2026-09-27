@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manchester City · Sitio web y redes sociales</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <section class="channels" aria-roledescription="carrusel" aria-label="Presencia digital del Manchester City" data-channels>
+
+    <button class="nav nav--prev" type="button" aria-label="Canal anterior" data-prev>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+    </button>
+
+    <!-- Imágenes: para sustituirlas basta con reemplazar los archivos .png de esta misma carpeta -->
+    <div class="media-stack">
+      <figure class="media slide is-active" tabindex="0" aria-label="Sitio web oficial">
+        <img src="web.png" alt="Portada del sitio web oficial del Manchester City" width="1348" height="631" decoding="async">
+        <figcaption class="overlay">
+          <span class="overlay__handle">mancity.com</span>
+          <span class="overlay__tags">Noticias · Calendario · Entradas</span>
+        </figcaption>
+      </figure>
+
+      <figure class="media slide" tabindex="0" aria-label="Instagram">
+        <img src="instagram.png" alt="Publicación en el perfil de Instagram del Manchester City" width="1197" height="626" decoding="async">
+        <figcaption class="overlay">
+          <span class="overlay__handle">@mancity</span>
+          <span class="overlay__tags">Fotografía · Vídeo · Comunidad</span>
+        </figcaption>
+      </figure>
+
+      <figure class="media slide" tabindex="0" aria-label="Facebook">
+        <img src="facebook.png" alt="Página oficial de Facebook del Manchester City" width="1336" height="566" decoding="async">
+        <figcaption class="overlay">
+          <span class="overlay__handle">/mancity</span>
+          <span class="overlay__tags">Comunidad · Noticias · Vídeo</span>
+        </figcaption>
+      </figure>
+
+      <figure class="media slide" tabindex="0" aria-label="YouTube">
+        <img src="youtube.png" alt="Canal oficial de YouTube del Manchester City" width="1228" height="607" decoding="async">
+        <figcaption class="overlay">
+          <span class="overlay__handle">@mancity</span>
+          <span class="overlay__tags">Vídeos · Shorts · Directos</span>
+        </figcaption>
+      </figure>
+    </div>
+
+    <button class="nav nav--next" type="button" aria-label="Canal siguiente" data-next>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </button>
+
+    <div class="info-stack" aria-live="polite">
+      <div class="info slide is-active">
+        <h2 class="info__name">Sitio web</h2>
+        <p class="info__text">Espacio digital oficial donde el club centraliza la información institucional, la actualidad deportiva y los servicios dirigidos a sus aficionados.</p>
+        <a class="info__link" href="https://www.mancity.com/" target="_blank" rel="noopener noreferrer">Visitar sitio <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="info slide" inert>
+        <h2 class="info__name">Instagram</h2>
+        <p class="info__text">Canal de carácter eminentemente visual que refuerza la identidad del club a través de la fotografía y el vídeo de formato breve.</p>
+        <a class="info__link" href="https://www.instagram.com/mancity/" target="_blank" rel="noopener noreferrer">Ver perfil <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="info slide" inert>
+        <h2 class="info__name">Facebook</h2>
+        <p class="info__text">Plataforma de amplio alcance orientada a la difusión de contenidos y a la relación con una comunidad global de seguidores.</p>
+        <a class="info__link" href="https://www.facebook.com/mancity/" target="_blank" rel="noopener noreferrer">Ver perfil <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="info slide" inert>
+        <h2 class="info__name">YouTube</h2>
+        <p class="info__text">Canal audiovisual donde el club desarrolla contenidos de mayor duración, como resúmenes, entrevistas y material exclusivo.</p>
+        <a class="info__link" href="https://www.youtube.com/@mancity" target="_blank" rel="noopener noreferrer">Ver canal <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+
+    <p class="counter" aria-hidden="true"><span data-current>01</span> / <span data-total>04</span></p>
+
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
